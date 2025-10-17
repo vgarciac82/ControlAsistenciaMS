@@ -34,8 +34,47 @@ public class AsistenciaController {
 	 *   "fechaFin": "2024-01-31"
 	 * }
 	 */
+
+    @PostMapping("/actualizar")
+    public ResponseEntity<Map<String, Object>> actualizarAsistencia(@RequestBody AsistenciaRequest request) {
+    	Map<String, Object> response = new HashMap<>();
+    	
+    	try {
+	    	boolean resultado = asistenciaService.actualizarAsistencia(
+					request.getIdEmpleado(), 
+					request.getFechaInicio(), 
+					request.getFechaFin(),
+					request.getConcepto()
+				);
+	    	
+	
+			response.put("success", resultado);
+			response.put("message", resultado ? "Asistencia revertida exitosamente" : "No se pudo revertir la asistencia");
+			response.put("idEmpleado", request.getIdEmpleado());
+			response.put("fechaInicio", request.getFechaInicio());
+			response.put("fechaFin", request.getFechaFin());
+			response.put("concepto", request.getConcepto());
+			
+			return ResponseEntity.ok(response);
+		
+		} catch (IllegalArgumentException e) {
+			response.put("success", false);
+			response.put("message", "Error de validación: " + e.getMessage());
+			response.put("error", "VALIDATION_ERROR");
+			
+			return ResponseEntity.badRequest().body(response);
+			
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", "Error interno del servidor: " + e.getMessage());
+			response.put("error", "INTERNAL_ERROR");
+			
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+    }
+
 	@PostMapping("/revertir")
-	public ResponseEntity<Map<String, Object>> revertirAsistencia(@RequestBody RevertirAsistenciaRequest request) {
+	public ResponseEntity<Map<String, Object>> revertirAsistencia(@RequestBody AsistenciaRequest request) {
 		Map<String, Object> response = new HashMap<>();
 		
 		try {
@@ -73,18 +112,20 @@ public class AsistenciaController {
 	/**
 	 * Clase interna para representar la petición de reversión de asistencia
 	 */
-	public static class RevertirAsistenciaRequest {
+	public static class AsistenciaRequest {
 		private Integer idEmpleado;
 		private String fechaInicio;
 		private String fechaFin;
-
+		private String concepto; 
+		
 		// Constructores
-		public RevertirAsistenciaRequest() {}
+		public AsistenciaRequest() {}
 
-		public RevertirAsistenciaRequest(Integer idEmpleado, String fechaInicio, String fechaFin) {
+		public AsistenciaRequest(Integer idEmpleado, String fechaInicio, String fechaFin, String concepto) {
 			this.idEmpleado = idEmpleado;
 			this.fechaInicio = fechaInicio;
-			this.fechaFin = fechaFin;
+			this.fechaFin = fechaFin;	
+			this.concepto = concepto;
 		}
 
 		// Getters y Setters
@@ -112,13 +153,22 @@ public class AsistenciaController {
 			this.fechaFin = fechaFin;
 		}
 
-		@Override
-		public String toString() {
-			return "RevertirAsistenciaRequest{" +
-					"idEmpleado=" + idEmpleado +
-					", fechaInicio=" + fechaInicio +
-					", fechaFin=" + fechaFin +
-					'}';
-		}
+	    public String getConcepto() {
+	        return concepto;
+	    }
+
+	    public void setConcepto(String concepto) {
+	        this.concepto = concepto;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return "AsistenciaRequest{" +
+	                "idEmpleado=" + idEmpleado +
+	                ", fechaInicio='" + fechaInicio + '\'' +
+	                ", fechaFin='" + fechaFin + '\'' +
+	                ", concepto='" + concepto + '\'' +
+	                '}';
+	    }
 	}
 }

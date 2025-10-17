@@ -13,8 +13,19 @@ public interface AsistenciaRepository extends JpaRepository<Formato, Integer> {
 
 	@Modifying
 	@Query(value = "CALL sp_revertir_viatico(:idEmpleado, :fechaInicio, :fechaFin)", nativeQuery = true)
-	int revertirAsistencia(@Param("idEmpleado") Integer idEmpleado, 
-						  @Param("fechaInicio") String fechaInicio, 
-						  @Param("fechaFin") String fechaFin);
+	int revertirAsistencia(
+			@Param("idEmpleado") Integer idEmpleado, 
+			@Param("fechaInicio") String fechaInicio, 
+			@Param("fechaFin") String fechaFin
+			);
+	
+	@Modifying
+	@Query(value = "CALL sp_asistenciasViaticos(:idEmpleado, :fechaInicio, :fechaFin, :concepto)", nativeQuery = true)
+	 int actualizarAsistencia(
+	            @Param("idEmpleado") Integer idEmpleado,
+	            @Param("fechaInicio") String fechaInicio,
+	            @Param("fechaFin") String fechaFin,
+	            @Param("concepto") String concepto
+	    );
 
 }
