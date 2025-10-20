@@ -50,7 +50,8 @@ public class AsistenciaService {
 		}
 	}
 	
-		public boolean actualizarAsistencia(Integer idEmpleado, String fechaInicio, String fechaFin, String concepto) {
+	@Transactional
+	public boolean actualizarAsistencia(Integer idEmpleado, String fechaInicio, String fechaFin, String concepto) {
 			// Validaciones de entrada
 			if (idEmpleado == null || idEmpleado <= 0) {
 				throw new IllegalArgumentException("El ID del empleado debe ser un número positivo");

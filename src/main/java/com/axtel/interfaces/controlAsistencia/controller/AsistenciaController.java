@@ -3,6 +3,8 @@ package com.axtel.interfaces.controlAsistencia.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,7 @@ public class AsistenciaController {
 
 	private final AsistenciaService asistenciaService;
 
+	private final Logger logger = LoggerFactory.getLogger(AsistenciaController.class);
 	public AsistenciaController(AsistenciaService asistenciaService) {
 		this.asistenciaService = asistenciaService;
 	}
@@ -46,6 +49,7 @@ public class AsistenciaController {
 			return ResponseEntity.ok(response);
 		
 		} catch (IllegalArgumentException e) {
+			logger.error("Error al actualizar asistencia: {}", e.toString(),e);
 			response.put("success", false);
 			response.put("message", "Error de validación: " + e.getMessage());
 			response.put("error", "VALIDATION_ERROR");
@@ -53,6 +57,7 @@ public class AsistenciaController {
 			return ResponseEntity.badRequest().body(response);
 			
 		} catch (Exception e) {
+			logger.error("Error al actualizar asistencia: {}", e.toString(),e);
 			response.put("success", false);
 			response.put("message", "Error interno del servidor: " + e.getMessage());
 			response.put("error", "INTERNAL_ERROR");
@@ -82,6 +87,7 @@ public class AsistenciaController {
 			return ResponseEntity.ok(response);
 			
 		} catch (IllegalArgumentException e) {
+			logger.error("Error al revertir asistencia: {}", e.toString(),e);
 			response.put("success", false);
 			response.put("message", "Error de validación: " + e.getMessage());
 			response.put("error", "VALIDATION_ERROR");
@@ -89,6 +95,7 @@ public class AsistenciaController {
 			return ResponseEntity.badRequest().body(response);
 			
 		} catch (Exception e) {
+			logger.error("Error al revertir asistencia: {}", e.toString(),e);
 			response.put("success", false);
 			response.put("message", "Error interno del servidor: " + e.getMessage());
 			response.put("error", "INTERNAL_ERROR");
