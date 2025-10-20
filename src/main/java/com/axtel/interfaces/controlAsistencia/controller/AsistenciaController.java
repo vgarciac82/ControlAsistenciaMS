@@ -22,19 +22,7 @@ public class AsistenciaController {
 		this.asistenciaService = asistenciaService;
 	}
 
-	/**
-	 * Endpoint para revertir la asistencia de un empleado
-	 * 
-	 * POST /api/asistencia/revertir
-	 * 
-	 * Body:
-	 * {
-	 *   "idEmpleado": 123,
-	 *   "fechaInicio": "2024-01-01",
-	 *   "fechaFin": "2024-01-31"
-	 * }
-	 */
-
+	
     @PostMapping("/actualizar")
     public ResponseEntity<Map<String, Object>> actualizarAsistencia(@RequestBody AsistenciaRequest request) {
     	Map<String, Object> response = new HashMap<>();
