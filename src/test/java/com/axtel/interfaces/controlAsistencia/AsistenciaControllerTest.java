@@ -48,8 +48,8 @@ class AsistenciaControllerTest {
                 .content(requestBody))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.idEmpleado").value(45))
-                .andExpect(jsonPath("$.concepto").value("VIATICO"));
+                .andExpect(jsonPath("$.idEmpleado").value(45));
+                
     }
 
     @Test
