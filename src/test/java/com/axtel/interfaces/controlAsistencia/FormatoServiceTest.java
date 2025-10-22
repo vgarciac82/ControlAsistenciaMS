@@ -124,4 +124,15 @@ class FormatoServiceTest {
         verify(formatoRepository, times(1))
                 .existeOtroFormatoEnRango(numeroEmpleado, fechaInicio, fechaFin);
     }
+    
+    @Test
+    void testValidarEmpleadoEstaDeVacaciones() {
+        int numeroEmpleado = 45;
+        when(formatoRepository.tieneFormatoVacaciones(numeroEmpleado)).thenReturn(0);
+
+        long resultado = formatoService.tieneFormatoVacacionesPorEmpleado(numeroEmpleado);
+
+        assertEquals(2L, resultado);
+        verify(formatoRepository, times(1)).tieneFormatoVacaciones(numeroEmpleado);
+    }
 }

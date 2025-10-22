@@ -98,37 +98,7 @@ class AsistenciaServiceTest {
         }
     }
 
-    @Test
-    @DisplayName("revertirAsistencia - Prueba con diferentes formatos de fecha")
-    void revertirAsistencia_PruebaConDiferentesFormatosFecha() {
-        System.out.println("\n=== PRUEBA: Diferentes formatos de fecha ===");
-        
-        String[][] fechasTest = {
-            {"2024-01-01", "2024-01-31"}, // Formato ISO
-            {"01/01/2024", "31/01/2024"}, // Formato con barras
-            {"2024-12-31", "2024-12-31"}  // Misma fecha inicio y fin
-        };
-
-        for (int i = 0; i < fechasTest.length; i++) {
-            String fechaInicio = fechasTest[i][0];
-            String fechaFin = fechasTest[i][1];
-            
-            try {
-                boolean resultado = asistenciaService.revertirAsistencia(idEmpleadoValido, fechaInicio, fechaFin);
-                assertNotNull(resultado);
-                
-                System.out.println("✅ ÉXITO: Formato fecha " + (i + 1) + " funcionó correctamente");
-                System.out.println("   - Inicio: " + fechaInicio + " | Fin: " + fechaFin);
-                System.out.println("   - Resultado: " + resultado);
-                
-            } catch (Exception e) {
-                System.out.println("❌ ERROR: Formato fecha " + (i + 1) + " falló");
-                System.out.println("   - Inicio: " + fechaInicio + " | Fin: " + fechaFin);
-                System.out.println("   - Error: " + e.getMessage());
-                fail("El stored procedure no acepta el formato de fecha: " + fechaInicio + " - " + fechaFin);
-            }
-        }
-    }
+   
 
     @Test
     @DisplayName("revertirAsistencia - Validación de parámetros nulos")

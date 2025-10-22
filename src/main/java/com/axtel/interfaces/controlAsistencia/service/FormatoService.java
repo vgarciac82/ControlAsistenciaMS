@@ -37,4 +37,8 @@ public class FormatoService {
 	public boolean tieneOtroFormato(Integer numeroEmpleado, LocalDate fechaInicio, LocalDate fechaFin) {
 		return formatoRepository.existeOtroFormatoEnRango(numeroEmpleado, fechaInicio, fechaFin);
 	}
+	
+	 public int tieneFormatoVacacionesPorEmpleado(int numeroEmpleado) {
+	        return formatoRepository.tieneFormatoVacaciones(numeroEmpleado);
+	 }
 }

@@ -27,5 +27,14 @@ public interface FormatoRepository extends JpaRepository<Formato, Integer> {
 	
 	boolean existeOtroFormatoEnRango(@Param("numeroEmpleado") Integer numeroEmpleado, @Param("fecha") LocalDate fecha,
 			@Param("fechaFin") LocalDate fechaFin);
+	
+	@Query(value = "SELECT COUNT(*) " +
+            "FROM formato " +
+            "WHERE CAT_TIPO_FORMATO_ID = 3 " +
+            "AND NOW() BETWEEN fecha_inicio AND fecha_fin " +
+            "AND numero_empleado = :numeroEmpleado " +
+            "AND bAceptado = 1",
+    nativeQuery = true)
+	int tieneFormatoVacaciones(@Param("numeroEmpleado") int numeroEmpleado);
 
 }

@@ -159,4 +159,5 @@ public class Formato {
 	public void setBAutoriza(Boolean bAutoriza) {
 		this.bAutoriza = bAutoriza;
 	}
+
 }
